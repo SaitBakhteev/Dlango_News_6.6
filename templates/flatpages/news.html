@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% extends 'flatpages/default.html' %}
+    {% load filter %} <!-- загрузка фильтра -->
+    <meta charset="UTF-8">
+<!-- Изменение заголовочной части базового шаблона default -->
+{% block title %}    
+    <h5> Количество постов: {{ post | length }}</h5>
+{% endblock title %}
+</head>
+<body>
+<!-- Таблица, выводящая новости/статьи -->
+{% block content %}
+    
+    <table class="table-bordered"  style="background-color: #25cff2; border-color: ghostwhite " cellspacing="10">
+<tbody> 
+        <tr>
+            <td><h5>Заголовок поста </h5></td>
+            <td><h5>Дата публикации</h5></td>
+            <td><h5>Выдержка из статьи</h5></td>
+        </tr>
+        
+        <!-- Содержимое ячеек таблицы -->
+        {% for i in post %}
+            <tr>                
+                <td>{{ i.title |censor:'секс'|censor:'Секс'}}</td>
+                <td>{{i.create_time | date:'d.m.Y H:i:s' }}</td>
+                <td>{{ i.content|truncatechars:20 |censor:'секс'|censor:'Секс'}}</td>
+            </tr>
+            
+        {% endfor %}
+</tbody></table>
+{% endblock content %}
+</body>
+</html>
